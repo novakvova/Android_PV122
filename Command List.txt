@@ -1,0 +1,20 @@
+----Windows run docker---
+docker build -t slon_image .
+docker run -d --restart=always -v d:\images:/app/images --name slon_container -p 8907:80 slon_image
+
+-----Hosting Ubuntu-----
+docker build -t slon_image .
+docker run -d --restart=always -v /var/www/android/slon.itstep.click/images:/app/images --name slon_container -p 8907:80 slon_image
+
+--------------------------------
+docker ps -l
+docker images --all
+
+docker ps -a
+
+docker stop slon_container
+docker rm slon_container
+
+docker rmi slon_image
+
+
