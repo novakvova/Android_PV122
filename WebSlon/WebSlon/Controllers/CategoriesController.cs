@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebSlon.Data;
 using WebSlon.Data.Entities;
+using WebSlon.Helpers;
 using WebSlon.Models.Category;
 
 namespace WebSlon.Controllers
@@ -33,9 +34,14 @@ namespace WebSlon.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] CategoryCreateViewModel model)
+        public async Task<IActionResult> Create([FromForm] CategoryCreateViewModel model)
         {
             var cat = _mapper.Map<CategoryEntity>(model);
+            if (model.Image != null)
+            {
+                cat.Image = await ImageWorker.SaveImage(model.Image);
+            }
+
             await _appEFContext.Categories.AddAsync(cat);
             await _appEFContext.SaveChangesAsync();
             return Ok(_mapper.Map<CategoryItemViewModel>(cat));
