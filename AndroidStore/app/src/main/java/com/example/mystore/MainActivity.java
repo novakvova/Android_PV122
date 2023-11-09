@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ImageView myImage = findViewById(R.id.myImage);
-        String url = Urls.BASE+"/images/123.jpg";
+        String url = Urls.BASE+"/images/1.jpeg";
         Glide.with(this)
                 .load(url)
                 .apply(new RequestOptions().override(600))
