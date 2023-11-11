@@ -39,7 +39,7 @@ namespace WebSlon.Controllers
             var cat = _mapper.Map<CategoryEntity>(model);
             if (model.Image != null)
             {
-                cat.Image = await ImageWorker.SaveImage(model.Image);
+                cat.Image = await ImageWorker.SaveImageAsync(model.Image);
             }
 
             await _appEFContext.Categories.AddAsync(cat);

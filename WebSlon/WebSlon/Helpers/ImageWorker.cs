@@ -4,17 +4,22 @@ namespace WebSlon.Helpers
 {
     public static class ImageWorker
     {
-        public static async Task<string> SaveImage(IFormFile image)
+        public static async Task<string> SaveImageAsync(IFormFile image)
         {
             using (MemoryStream ms = new MemoryStream())
             {
                 await image.CopyToAsync(ms);
-                string fileName = await SaveBytesCompres(ms.ToArray());
+                string fileName = await SaveBytesCompresAsync(ms.ToArray());
                 return fileName;
             }
         }
 
-        private static async Task<string> SaveBytesCompres(byte[] bytes)
+        public static async Task<string> SaveImageAsync(byte[] bytes)
+        {
+            return await SaveBytesCompresAsync(bytes);
+        }
+
+        private static async Task<string> SaveBytesCompresAsync(byte[] bytes)
         {
             string imageName = Path.GetRandomFileName() + ".webp";
             string dirSaveImage = Path.Combine(Directory.GetCurrentDirectory(), "images", imageName);
