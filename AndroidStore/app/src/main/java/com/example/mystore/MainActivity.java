@@ -26,6 +26,10 @@ public class MainActivity extends BaseActivity {
 
     private RecyclerView rvList;
     CategoriesAdapter adapter;
+
+    private void onDelete(CategoryItemDTO category) {
+        Log.d("Category delete", category.getName());
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +46,7 @@ public class MainActivity extends BaseActivity {
         rvList = findViewById(R.id.rvList);
         rvList.setHasFixedSize(true);
         rvList.setLayoutManager(new GridLayoutManager(this, 1, RecyclerView.VERTICAL, false));
-        rvList.setAdapter(new CategoriesAdapter(new ArrayList<>()));
+        rvList.setAdapter(new CategoriesAdapter(new ArrayList<>(), MainActivity.this::onDelete));
 
         ApplicationNetwork
                 .getInstance()
@@ -53,7 +57,7 @@ public class MainActivity extends BaseActivity {
                     public void onResponse(Call<List<CategoryItemDTO>> call, Response<List<CategoryItemDTO>> response) {
                         if(response.isSuccessful()) {
                             List<CategoryItemDTO> data = response.body();
-                            adapter = new CategoriesAdapter(data);
+                            adapter = new CategoriesAdapter(data, MainActivity.this::onDelete);
                             rvList.setAdapter(adapter);
 //                            for (CategoryItemDTO item : data) {
 //                                Log.d("Network request", item.getId()+" "
