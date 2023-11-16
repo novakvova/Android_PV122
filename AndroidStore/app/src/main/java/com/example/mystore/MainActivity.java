@@ -63,13 +63,11 @@ public class MainActivity extends BaseActivity {
 //                                Log.d("Network request", item.getId()+" "
 //                                        +item.getName()+ " " +item.getImage());
 //                            }
-
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<CategoryItemDTO>> call, Throwable t) {
-
                     }
                 });
 

@@ -46,5 +46,19 @@ namespace WebSlon.Controllers
             await _appEFContext.SaveChangesAsync();
             return Ok(_mapper.Map<CategoryItemViewModel>(cat));
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var cat = await _appEFContext.Categories
+                 .Where(x => x.IsDeleted == false)
+                .SingleOrDefaultAsync(x=>x.Id == id);
+            if (cat is null)
+                return NotFound();
+
+            cat.IsDeleted = true;
+            _appEFContext.SaveChanges();
+            return Ok();
+        }
     }
 }
