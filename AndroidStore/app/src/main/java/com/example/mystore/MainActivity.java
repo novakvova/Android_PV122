@@ -29,6 +29,23 @@ public class MainActivity extends BaseActivity {
 
     private void onDelete(CategoryItemDTO category) {
         Log.d("Category delete", category.getName());
+        ApplicationNetwork
+                .getInstance()
+                .getGategoriesApi()
+                .delete(category.getId())
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.isSuccessful()) {
+                            loadListServer();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +65,10 @@ public class MainActivity extends BaseActivity {
         rvList.setLayoutManager(new GridLayoutManager(this, 1, RecyclerView.VERTICAL, false));
         rvList.setAdapter(new CategoriesAdapter(new ArrayList<>(), MainActivity.this::onDelete));
 
+        loadListServer();
+    }
+
+    private void loadListServer() {
         ApplicationNetwork
                 .getInstance()
                 .getGategoriesApi()
@@ -59,10 +80,7 @@ public class MainActivity extends BaseActivity {
                             List<CategoryItemDTO> data = response.body();
                             adapter = new CategoriesAdapter(data, MainActivity.this::onDelete);
                             rvList.setAdapter(adapter);
-//                            for (CategoryItemDTO item : data) {
-//                                Log.d("Network request", item.getId()+" "
-//                                        +item.getName()+ " " +item.getImage());
-//                            }
+
                         }
                     }
 
@@ -70,6 +88,5 @@ public class MainActivity extends BaseActivity {
                     public void onFailure(Call<List<CategoryItemDTO>> call, Throwable t) {
                     }
                 });
-
     }
 }

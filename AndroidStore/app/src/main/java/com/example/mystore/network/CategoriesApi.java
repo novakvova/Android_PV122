@@ -25,6 +25,6 @@ public interface CategoriesApi {
     public Call<CategoryItemDTO> create(@PartMap Map<String, RequestBody> params,
                                         @Part MultipartBody.Part image);
     @DELETE("/api/categories/{id}")
-    Call<Void> deletePost(@Path("id") int categoryId);
+    Call<Void> delete(@Path("id") int categoryId);
 
 }
