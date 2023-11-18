@@ -76,6 +76,8 @@ namespace WebSlon.Controllers
                 ImageWorker.DeleteImage(cat.Image);
                 cat.Image = await ImageWorker.SaveImageAsync(model.Image);
             }
+            cat.Name = model.Name;
+            cat.Description = model.Description;
 
             await _appEFContext.SaveChangesAsync();
             return Ok(_mapper.Map<CategoryItemViewModel>(cat));
