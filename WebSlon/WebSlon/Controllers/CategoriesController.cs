@@ -60,5 +60,25 @@ namespace WebSlon.Controllers
             _appEFContext.SaveChanges();
             return Ok();
         }
+
+        [HttpPut("edit/{id}")]
+        public async Task<IActionResult> Edit(int id, [FromForm] CategoryCreateViewModel model)
+        {
+            var cat = await _appEFContext.Categories
+                .Where(x => x.IsDeleted == false)
+                .SingleOrDefaultAsync(x=>x.Id == id);
+
+            if (cat is null)
+                return NotFound();
+
+            if (model.Image != null)
+            {
+                ImageWorker.DeleteImage(cat.Image);
+                cat.Image = await ImageWorker.SaveImageAsync(model.Image);
+            }
+
+            await _appEFContext.SaveChangesAsync();
+            return Ok(_mapper.Map<CategoryItemViewModel>(cat));
+        }
     }
 }

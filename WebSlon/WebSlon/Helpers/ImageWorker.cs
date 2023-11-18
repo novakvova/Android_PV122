@@ -1,4 +1,5 @@
-﻿using SixLabors.ImageSharp.Formats.Webp;
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Webp;
 
 namespace WebSlon.Helpers
 {
@@ -17,6 +18,12 @@ namespace WebSlon.Helpers
         public static async Task<string> SaveImageAsync(byte[] bytes)
         {
             return await SaveBytesCompresAsync(bytes);
+        }
+
+        public static void DeleteImage(string imageName)
+        {
+            string dirSaveImage = Path.Combine(Directory.GetCurrentDirectory(), "images", imageName);
+            File.Delete(dirSaveImage);
         }
 
         private static async Task<string> SaveBytesCompresAsync(byte[] bytes)
