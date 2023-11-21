@@ -1,0 +1,14 @@
+-----Install Chocolate------
+---Powershell---
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+----cmd----
+choco -v
+
+-----Install node and jdk----------------
+https://reactnative.dev/docs/environment-setup?guide=native&platform=android
+choco install -y nodejs-lts microsoft-openjdk11
+
+npx react-native@latest init AwesomeProject
+
+npm run android
