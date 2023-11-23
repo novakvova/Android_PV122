@@ -3,7 +3,7 @@ import axios from "axios";
 import {StyleSheet, Text, View} from "react-native";
 import {ICategoryItem} from "./types";
 import CustomListview from "./CustomListview";
-const HomePage = () => {
+const HomeScreen = () => {
     const [list, setList] = useState<ICategoryItem[]>([]);
 
     useEffect(() => {
@@ -33,4 +33,4 @@ const styles = StyleSheet.create({
         backgroundColor: '#FCFCFC',
     }
 });
-export default HomePage;
+export default HomeScreen;
