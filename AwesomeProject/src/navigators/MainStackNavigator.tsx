@@ -5,6 +5,7 @@ import React from "react";
 // import {BlurView} from "expo-blur";
 import HomeScreen from "../components/home/HomeScreen";
 import Icon from "../components/icon/Icon";
+import CreateScreen from "../components/create/CreateScreen";
 
 const MainTab = createBottomTabNavigator();
 
@@ -75,7 +76,7 @@ export const MainStackNavigator = () => {
 
                 <MainTab.Screen
                     name={'Create'}
-                    component={HomeScreen}
+                    component={CreateScreen}
                     options={{
                         title: 'Add',
                         headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },
