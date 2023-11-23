@@ -16,6 +16,7 @@ import { userIcon } from "./Icons";
 import { houseIcon } from "./Icons";
 import { arrowUpIcon } from "./Icons";
 import { langIcon } from "./Icons";
+import { createIcon } from "./Icons";
 
 export default function Icon({ type, focused, size = 30, inversia, isDark }: { type: any, focused: any, size?: number, inversia?: any, isDark: boolean }) {
     let xml: any;
@@ -70,6 +71,9 @@ export default function Icon({ type, focused, size = 30, inversia, isDark }: { t
             break;
         case "schedule":
             xml = scheduleIcon(focused, isDark);
+            break;
+        case "createIcon":
+            xml = createIcon(focused, isDark);
             break;
     }
 

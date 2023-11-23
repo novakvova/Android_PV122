@@ -72,6 +72,24 @@ export const MainStackNavigator = () => {
                         ),
                     }}
                 />
+
+                <MainTab.Screen
+                    name={'Create'}
+                    component={HomeScreen}
+                    options={{
+                        title: 'Add',
+                        headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },
+                        headerTitleStyle: { color: colors.mainText },
+                        tabBarIcon: ({ focused }) => (
+                            <Icon
+                                type={"createIcon"}
+                                size={20}
+                                focused={focused}
+                                isDark={isDark}
+                            />
+                        ),
+                    }}
+                />
                 {/*<MainTab.Screen*/}
                 {/*    name={'Course'}*/}
                 {/*    component={ProfileScreen}*/}
