@@ -9,12 +9,13 @@ import {
     KeyboardAvoidingView,
     Platform,
     Image,
-    TouchableOpacity
+    TouchableOpacity, Animated
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Controller, useForm} from "react-hook-form";
 import {useTheme} from "../../contexts/ThemeContext";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
+import ScrollView = Animated.ScrollView;
 
 
 const CreateScreen = () => {
@@ -53,7 +54,7 @@ const CreateScreen = () => {
             justifyContent: 'center',
             alignContent: 'center',
             textAlign: 'center',
-            padding: 100
+            padding: 50
         },
         loginText: {
             color: colors.mainText,
@@ -111,8 +112,8 @@ const CreateScreen = () => {
         formState: {errors},
     } = useForm({
         defaultValues: {
-            firstName: "",
-            lastName: "",
+            name: "",
+            description: ""
         },
     })
     const onSubmit = (data) => console.log(data)
@@ -141,73 +142,74 @@ const CreateScreen = () => {
     // };
 
     return (
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
-            <KeyboardAwareScrollView
-
-                style={styles.container}
-            >
-                <View style={styles.logoContainer}>
-                    <Image style={styles.tinyLogo} resizeMode={'contain'} source={require('../../assets/logo.png')}/>
-                </View>
-                <View style={styles.contentContainer}>
-                    <Text style={styles.loginText}>Створити категорію</Text>
-                    <View style={{}}>
-                        <Text style={styles.label}>Назва</Text>
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: true,
-                            }}
-                            render={({field: {onChange, onBlur, value}}) => (
-                                <TextInput
-                                    multiline={false}
-                                    style={styles.input}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                />
-                            )}
-                            name="firstName"
-                        />
-                        {errors.firstName && <Text style={{color: 'red'}}>This is required.</Text>}
-                    </View>
-                    {/*<Controller*/}
-                    {/*    control={control}*/}
-                    {/*    rules={{*/}
-                    {/*        maxLength: 100,*/}
-                    {/*    }}*/}
-                    {/*    render={({field: {onChange, onBlur, value}}) => (*/}
-                    {/*        <TextInput*/}
-                    {/*            placeholder="Last name"*/}
-                    {/*            onBlur={onBlur}*/}
-                    {/*            onChangeText={onChange}*/}
-                    {/*            value={value}*/}
-                    {/*        />*/}
-                    {/*    )}*/}
-                    {/*    name="lastName"*/}
-                    {/*/>*/}
-
-                    <View>
-                        <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.loginBtn} >
-                            <Text style={styles.loginBtnText}>Login</Text>
-                        </TouchableOpacity>
-                        {/* <Button title='fdsfs' onPress={handleSubmit}></Button> */}
-                        <TouchableOpacity style={styles.rememberBlock} >
-                            <Text style={styles.forgotText}>Forgot password?</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    {/* <Button title='Login' style={styles.loginBtn} /> */}
+        // <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
+        <ScrollView style={styles.container}>
+            <View style={styles.logoContainer}>
+                <Image style={styles.tinyLogo} resizeMode={'contain'} source={require('../../assets/logo.png')}/>
+            </View>
+            <View style={styles.contentContainer}>
+                <Text style={styles.loginText}>Створити категорію</Text>
+                <View style={{}}>
+                    <Text style={styles.label}>Назва</Text>
+                    <Controller
+                        control={control}
+                        rules={{
+                            required: true,
+                        }}
+                        render={({field: {onChange, onBlur, value}}) => (
+                            <TextInput
+                                multiline={false}
+                                style={styles.input}
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                            />
+                        )}
+                        name="name"
+                    />
+                    {errors.name && <Text style={{color: 'red'}}>Назва є обов'язковою!</Text>}
                 </View>
 
-                {/*<Button title="Create" onPress={handleSubmit(onSubmit)}/>*/}
-                {/*    <Button*/}
-                {/*        color="#233A6F"*/}
-                {/*        title="Реєстрація"*/}
-                {/*        onPress={() => navigation.navigate('Home')}*/}
-                {/*    />*/}
-            </KeyboardAwareScrollView>
-        </KeyboardAvoidingView>
+                <View style={{}}>
+                    <Text style={styles.label}>Опис</Text>
+                    <Controller
+                        control={control}
+                        rules={{
+                            maxLength: 100,
+                        }}
+                        render={({field: {onChange, onBlur, value}}) => (
+                            <TextInput
+                                multiline={false}
+                                onBlur={onBlur}
+                                style={styles.input}
+                                onChangeText={onChange}
+                                value={value}
+                            />
+                        )}
+                        name="description"
+                    />
+                </View>
+                <View style={{marginBottom: 50}}>
+                    <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.loginBtn}>
+                        <Text style={styles.loginBtnText}>Створити</Text>
+                    </TouchableOpacity>
+                    {/* <Button title='fdsfs' onPress={handleSubmit}></Button> */}
+                    <TouchableOpacity style={styles.rememberBlock} onPress={() => navigation.navigate('Home')}>
+                        <Text style={styles.forgotText}>До списку</Text>
+                    </TouchableOpacity>
+                </View>
+
+                {/* <Button title='Login' style={styles.loginBtn} /> */}
+            </View>
+
+            {/*<Button title="Create" onPress={handleSubmit(onSubmit)}/>*/}
+            {/*    <Button*/}
+            {/*        color="#233A6F"*/}
+            {/*        title="Реєстрація"*/}
+            {/*        onPress={() => navigation.navigate('Home')}*/}
+            {/*    />*/}
+        </ScrollView>
+        // </KeyboardAvoidingView>
     );
 };
 
