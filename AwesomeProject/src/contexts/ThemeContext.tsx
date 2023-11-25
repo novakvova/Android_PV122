@@ -11,8 +11,8 @@ interface ThemeContextProps {
     toggleTheme():void
 }
 const initialState:ThemeContextProps = {
-    isDark: true,
-    colors: Dark,
+    isDark: false, //true,
+    colors: Light, //Dark,
     setIsDark: () => {},
     toggleTheme: () => {}
 }
@@ -25,15 +25,15 @@ const getTheme = () => {
     const theme = AsyncStorage.getItem("theme");
     if (!theme) {
         // Default theme is taken as dark-theme
-        AsyncStorage.setItem("theme", "dark");
-        return "dark";
+        AsyncStorage.setItem("theme", "light"/*"dark"*/);
+        return "light";//"dark";
     } else {
         return theme;
     }
 };
 
 export default function ThemeContextProvider({children}:{children:any}) {
-    const [colors, setColors] = useState(Dark);
+    const [colors, setColors] = useState(Light); //useState(Dark);
     const [isDark, setIsDark] = useState(true);
     // state = {
     //     isLightTheme: true,
