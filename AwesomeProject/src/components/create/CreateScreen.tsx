@@ -16,7 +16,7 @@ import {Controller, useForm} from "react-hook-form";
 import {useTheme} from "../../contexts/ThemeContext";
 import DocumentPicker, {DirectoryPickerResponse} from 'react-native-document-picker';
 import ScrollView = Animated.ScrollView;
-import axios from "axios";
+import http_common from "../../http_common";
 
 
 const CreateScreen = () => {
@@ -160,8 +160,7 @@ const CreateScreen = () => {
             });
             formData.append("name", data.name);
             formData.append("description", data.description);
-            // const resp = await axios.post("https://slon.itstep.click/api/categories/create",
-            const resp = await axios.post("http://10.0.2.2:5139/api/categories/create",
+            const resp = await http_common.post(`/api/categories/create`,
                 formData,{
                 headers: {
                     "Content-Type": "multipart/form-data"

@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import {StyleSheet, Text, View} from "react-native";
 import {ICategoryItem} from "./types";
 import CustomListview from "./CustomListview";
+import http_common from "../../http_common";
 const HomeScreen = () => {
     const [list, setList] = useState<ICategoryItem[]>([]);
 
     useEffect(() => {
-        // axios.get<ICategoryItem[]>("https://slon.itstep.click/api/categories/list")
-        axios.get<ICategoryItem[]>("http://10.0.2.2:5139/api/categories/list")
+        http_common.get<ICategoryItem[]>("/api/categories/list")
             .then(resp => {
                 const {data} = resp;
                 setList(data);

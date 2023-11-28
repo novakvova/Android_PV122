@@ -2,6 +2,7 @@ import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import CustomRow from './CustomRow';
 import {ICategoryItem} from "./types";
+import {APP_ENV} from "../../env";
 
 const styles = StyleSheet.create({
     container: {
@@ -21,7 +22,7 @@ const CustomListview: React.FC<IProps> = ({list}) => (
                 title={item.name}
                 description={item.description}
                 // image_url={`https://slon.itstep.click/images/${item.image}`}
-                image_url={`http://10.0.2.2:5139/images/${item.image}`}
+                image_url={`${APP_ENV.BASE_URL}/images/${item.image}`}
             />}
         />
 

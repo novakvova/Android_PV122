@@ -7,10 +7,11 @@
 import React from 'react';
 
 // import HomeScreen from "./src/components/home/HomeScreen";
-import ThemeContextProvider, {useTheme} from "./src/contexts/ThemeContext";
+import ThemeContextProvider, {useTheme} from "./contexts/ThemeContext";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import {NavigationContainer} from "@react-navigation/native";
-import Router from "./src/navigators/Router";
+import Router from "./navigators/Router";
+
 
 
 const App = () => {
