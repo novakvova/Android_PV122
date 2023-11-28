@@ -6,6 +6,7 @@ import React from "react";
 import HomeScreen from "../components/home/HomeScreen";
 import Icon from "../components/icon/Icon";
 import CreateScreen from "../components/create/CreateScreen";
+import TestScreen from "../components/test/TestScreen";
 
 const MainTab = createBottomTabNavigator();
 
@@ -91,79 +92,25 @@ export const MainStackNavigator = () => {
                         ),
                     }}
                 />
-                {/*<MainTab.Screen*/}
-                {/*    name={'Course'}*/}
-                {/*    component={ProfileScreen}*/}
-                {/*    options={{*/}
-                {/*        title: 'Course',*/}
-                {/*        headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },*/}
-                {/*        headerTitleStyle: { color: colors.mainText },*/}
-                {/*        //  tabBarActiveTintColor*/}
-                {/*        tabBarIcon: ({ focused }) => (*/}
-                {/*            <Icon*/}
-                {/*                type={"education"}*/}
-                {/*                size={20}*/}
-                {/*                focused={focused}*/}
-                {/*                isDark={isDark}*/}
-                {/*            />*/}
-                {/*        ),*/}
-                {/*    }}*/}
-                {/*/>*/}
-                {/*<MainTab.Screen*/}
-                {/*    name={'Schedule'}*/}
-                {/*    component={ProfileScreen}*/}
-                {/*    options={{*/}
-                {/*        title: 'Schedule',*/}
-                {/*        headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },*/}
-                {/*        headerTitleStyle: { color: colors.mainText },*/}
-                {/*        //  tabBarActiveTintColor*/}
-                {/*        tabBarIcon: ({ focused }) => (*/}
-                {/*            <Icon*/}
-                {/*                type={"schedule"}*/}
-                {/*                size={20}*/}
-                {/*                focused={focused}*/}
-                {/*                isDark={isDark}*/}
-                {/*            />*/}
-                {/*        ),*/}
-                {/*    }}*/}
-                {/*/>*/}
-                {/*<MainTab.Screen*/}
-                {/*    name={'Profile'}*/}
-                {/*    component={ProfileScreen}*/}
-                {/*    options={{*/}
-                {/*        title: 'Profile',*/}
-                {/*        headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },*/}
-                {/*        headerTitleStyle: { color: colors.mainText },*/}
-                {/*        //  tabBarActiveTintColor*/}
-                {/*        tabBarIcon: ({ focused }) => (*/}
-                {/*            <Icon*/}
-                {/*                type={"profile"}*/}
-                {/*                size={20}*/}
-                {/*                focused={focused}*/}
-                {/*                isDark={isDark}*/}
-                {/*            />*/}
-                {/*        ),*/}
-                {/*    }}*/}
-                {/*/>*/}
 
-                {/*<MainTab.Screen*/}
-                {/*    name={'Settings'}*/}
-                {/*    component={SettingsScreen}*/}
-                {/*    options={{*/}
-                {/*        title: 'Settings',*/}
-                {/*        headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },*/}
-                {/*        headerTitleStyle: { color: colors.mainText },*/}
-                {/*        //  tabBarActiveTintColor*/}
-                {/*        tabBarIcon: ({ focused }) => (*/}
-                {/*            <Icon*/}
-                {/*                type={"settings"}*/}
-                {/*                size={20}*/}
-                {/*                focused={focused}*/}
-                {/*                isDark={isDark}*/}
-                {/*            />*/}
-                {/*        ),*/}
-                {/*    }}*/}
-                {/*/>*/}
+                <MainTab.Screen
+                    name={'Test'}
+                    component={TestScreen}
+                    options={{
+                        title: 'Test',
+                        headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },
+                        headerTitleStyle: { color: colors.mainText },
+                        tabBarIcon: ({ focused }) => (
+                            <Icon
+                                type={"house"}
+                                size={20}
+                                focused={focused}
+                                isDark={isDark}
+                            />
+                        ),
+                    }}
+                />
+
             </MainTab.Navigator>
         </View>
 
