@@ -20,7 +20,8 @@ const CustomListview: React.FC<IProps> = ({list}) => (
             renderItem={({ item }) => <CustomRow
                 title={item.name}
                 description={item.description}
-                image_url={`https://slon.itstep.click/images/${item.image}`}
+                // image_url={`https://slon.itstep.click/images/${item.image}`}
+                image_url={`http://10.0.2.2:5139/images/${item.image}`}
             />}
         />
 

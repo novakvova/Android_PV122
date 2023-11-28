@@ -7,7 +7,8 @@ const HomeScreen = () => {
     const [list, setList] = useState<ICategoryItem[]>([]);
 
     useEffect(() => {
-        axios.get<ICategoryItem[]>("https://slon.itstep.click/api/categories/list")
+        // axios.get<ICategoryItem[]>("https://slon.itstep.click/api/categories/list")
+        axios.get<ICategoryItem[]>("http://10.0.2.2:5139/api/categories/list")
             .then(resp => {
                 const {data} = resp;
                 setList(data);

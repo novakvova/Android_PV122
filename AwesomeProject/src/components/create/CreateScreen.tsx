@@ -160,12 +160,15 @@ const CreateScreen = () => {
             });
             formData.append("name", data.name);
             formData.append("description", data.description);
-            const resp = await axios.post("https://slon.itstep.click/api/categories/create",
+            // const resp = await axios.post("https://slon.itstep.click/api/categories/create",
+            const resp = await axios.post("http://10.0.2.2:5139/api/categories/create",
                 formData,{
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
             });
+
+            navigation.navigate('Home');
 
         }
         catch(error) {
