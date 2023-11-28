@@ -1,5 +1,5 @@
 // LoginScreen.tsx
-import React from 'react';
+import React, {useState} from 'react';
 import {
     View,
     TextInput,
@@ -14,13 +14,16 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {Controller, useForm} from "react-hook-form";
 import {useTheme} from "../../contexts/ThemeContext";
-import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
+import DocumentPicker, {DirectoryPickerResponse} from 'react-native-document-picker';
 import ScrollView = Animated.ScrollView;
 
 
 const CreateScreen = () => {
     const navigation = useNavigation();
+    const [pickedImage, setPickedImage] = useState<string|null>(null);
+
     const {colors} = useTheme();
+
     const styles = StyleSheet.create({
         container: {
             backgroundColor: colors.background,
@@ -106,6 +109,35 @@ const CreateScreen = () => {
         }
     });
 
+
+    const pickImage = async () => {
+        try {
+            const result = await DocumentPicker.pick({
+                type: [DocumentPicker.types.images],
+            });
+            if(result!=null) {
+                if(result.length>0) {
+                    const selectImage = result[0];
+                    if(selectImage!=null) {
+                        setPickedImage(selectImage.uri);
+                        console.log("Select image", selectImage);
+                    }
+                }
+            }
+            // Handle the picked image, for example, set it in state
+            //setPickedImage(result.uri);
+
+        } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+                // User cancelled the picker
+                console.log('User cancelled the image picker');
+            } else {
+                // Handle other errors
+                console.error('Error picking image:', err);
+            }
+        }
+    };
+
     const {
         control,
         handleSubmit,
@@ -189,6 +221,21 @@ const CreateScreen = () => {
                         name="description"
                     />
                 </View>
+
+                {pickedImage && (
+                    <View>
+                        <Text>Selected Image:</Text>
+                        <Image source={{ uri: pickedImage }} style={{ width: 200, height: 200 }} />
+                    </View>
+                )}
+                <View style={{marginBottom: 25}}>
+
+
+                    <TouchableOpacity onPress={pickImage} style={styles.loginBtn}>
+                        <Text style={styles.loginBtnText}>Обрати фото</Text>
+                    </TouchableOpacity>
+                </View>
+
                 <View style={{marginBottom: 50}}>
                     <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.loginBtn}>
                         <Text style={styles.loginBtnText}>Створити</Text>
