@@ -16,6 +16,7 @@ import {Controller, useForm} from "react-hook-form";
 import {useTheme} from "../../contexts/ThemeContext";
 import DocumentPicker, {DirectoryPickerResponse} from 'react-native-document-picker';
 import ScrollView = Animated.ScrollView;
+import axios from "axios";
 
 
 const CreateScreen = () => {
@@ -148,7 +149,29 @@ const CreateScreen = () => {
             description: ""
         },
     })
-    const onSubmit = (data) => console.log(data)
+    const onSubmit = async (data) => {
+        try {
+            console.log(data)
+            const formData = new FormData();
+            formData.append("image", {
+               uri: pickedImage,
+               type: "image/jpeg",
+               name: "my.jpg"
+            });
+            formData.append("name", data.name);
+            formData.append("description", data.description);
+            const resp = await axios.post("https://slon.itstep.click/api/categories/create",
+                formData,{
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+
+        }
+        catch(error) {
+            console.log("Server error", error);
+        }
+    }
 
     // const handleLogin = async () => {
     //     try {
@@ -224,16 +247,15 @@ const CreateScreen = () => {
 
                 {pickedImage && (
                     <View>
-                        <Text>Selected Image:</Text>
-                        <Image source={{ uri: pickedImage }} style={{ width: 200, height: 200 }} />
+                        <Image source={{ uri: pickedImage }} style={{ width: 150, height: 150 }} />
                     </View>
                 )}
                 <View style={{marginBottom: 25}}>
 
-
                     <TouchableOpacity onPress={pickImage} style={styles.loginBtn}>
                         <Text style={styles.loginBtnText}>Обрати фото</Text>
                     </TouchableOpacity>
+
                 </View>
 
                 <View style={{marginBottom: 50}}>
