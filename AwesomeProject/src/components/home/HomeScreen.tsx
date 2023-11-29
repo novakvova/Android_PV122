@@ -19,6 +19,7 @@ const HomeScreen = () => {
     return (
         <>
             <View style={styles.container}>
+                <Text style={{fontSize: 25, textAlign: "center", fontWeight: "700"}}>Категорії</Text>
                 <CustomListview
                     list={list}
                 />
