@@ -166,8 +166,9 @@ const CreateScreen = () => {
                     "Content-Type": "multipart/form-data"
                 }
             });
+            console.log("Category info create", resp.data);
 
-            navigation.navigate('Home');
+            navigation.navigate('Home', { shouldUpdateDatabase: true });
 
         }
         catch(error) {
