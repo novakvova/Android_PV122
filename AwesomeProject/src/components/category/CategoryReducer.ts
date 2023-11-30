@@ -1,10 +1,10 @@
-import {CategoryActionType, ICategoryItem, ICategoryReducer} from "./types";
+import {CategoryActions, CategoryActionType, ICategoryItem, ICategoryReducer} from "./types";
 
 const init: ICategoryReducer = {
     list: []
 };
 
-export const CategoryReducer = (state = init, action: any): ICategoryReducer => {
+export const CategoryReducer = (state = init, action: CategoryActions): ICategoryReducer => {
     switch(action.type) {
         case CategoryActionType.SET_CATEGORY_LIST: {
             const list = action.payload as Array<ICategoryItem>;
@@ -12,6 +12,13 @@ export const CategoryReducer = (state = init, action: any): ICategoryReducer => 
                 ...state,
                 list
             }
+        }
+        case CategoryActionType.ADD_CATEGORY: {
+            const item = action.payload as ICategoryItem;
+            return {
+                ...state,
+                list: [...state.list, item]
+            };
         }
     }
     return state;

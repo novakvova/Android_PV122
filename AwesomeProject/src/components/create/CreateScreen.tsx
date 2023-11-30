@@ -3,24 +3,24 @@ import React, {useState} from 'react';
 import {
     View,
     TextInput,
-    Button,
     Text,
     StyleSheet,
-    KeyboardAvoidingView,
-    Platform,
-    Image,
-    TouchableOpacity, Animated
+    TouchableOpacity, Animated, Image
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Controller, useForm} from "react-hook-form";
 import {useTheme} from "../../contexts/ThemeContext";
-import DocumentPicker, {DirectoryPickerResponse} from 'react-native-document-picker';
+import DocumentPicker from 'react-native-document-picker';
 import ScrollView = Animated.ScrollView;
 import http_common from "../../http_common";
+import {CategoryActionType, ICategoryCreate, ICategoryItem} from "../category/types";
+import {useDispatch} from "react-redux";
+import {CreateCategoryAction} from "../category/CategoryActions";
 
 
 const CreateScreen = () => {
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     const [pickedImage, setPickedImage] = useState<string|null>(null);
 
     const {colors} = useTheme();
@@ -110,7 +110,6 @@ const CreateScreen = () => {
         }
     });
 
-
     const pickImage = async () => {
         try {
             const result = await DocumentPicker.pick({
@@ -151,53 +150,18 @@ const CreateScreen = () => {
     })
     const onSubmit = async (data) => {
         try {
-            console.log(data)
-            const formData = new FormData();
-            formData.append("image", {
-               uri: pickedImage,
-               type: "image/jpeg",
-               name: "my.jpg"
-            });
-            formData.append("name", data.name);
-            formData.append("description", data.description);
-            const resp = await http_common.post(`/api/categories/create`,
-                formData,{
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            });
-            console.log("Category info create", resp.data);
-
+            const model: ICategoryCreate = {
+                image: pickedImage ? pickedImage: "",
+                name: data.name,
+                description: data.description
+            }
+            await CreateCategoryAction(dispatch, model);
             navigation.navigate('Home', { shouldUpdateDatabase: true });
-
         }
         catch(error) {
             console.log("Server error", error);
         }
     }
-
-    // const handleLogin = async () => {
-    //     try {
-    //         const response = await axios.post(
-    //             'http://10.0.2.2:8000/api/auth/login',
-    //             {email, password}
-    //         );
-    //         if ('authorization' in response.data) {
-    //             const token: string = response.data.authorization.token;
-    //             await AsyncStorage.setItem('token', token);
-    //             console.log('Ви увійшли!');
-    //             // @ts-ignore
-    //             navigation.navigate('Home');
-    //         } else if ('error' in response.data) {
-    //             const errorMessage: string = response.data.error;
-    //             setError(errorMessage);
-    //         } else {
-    //             setError('Помилка входу');
-    //         }
-    //     } catch (error) {
-    //         console.error('Помилка входу:', error);
-    //     }
-    // };
 
     return (
         // <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
@@ -271,17 +235,9 @@ const CreateScreen = () => {
                     </TouchableOpacity>
                 </View>
 
-                {/* <Button title='Login' style={styles.loginBtn} /> */}
             </View>
 
-            {/*<Button title="Create" onPress={handleSubmit(onSubmit)}/>*/}
-            {/*    <Button*/}
-            {/*        color="#233A6F"*/}
-            {/*        title="Реєстрація"*/}
-            {/*        onPress={() => navigation.navigate('Home')}*/}
-            {/*    />*/}
         </ScrollView>
-        // </KeyboardAvoidingView>
     );
 };
 
