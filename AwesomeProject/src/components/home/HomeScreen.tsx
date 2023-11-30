@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {StyleSheet, Text, View} from "react-native";
 import CustomListview from "./CustomListview";
-import {useRoute} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
-import {GetListCategoriesAction} from "../category/CategoryActions";
+import {SetCategoryAction} from "../category/CategoryActions";
 const HomeScreen = () => {
     const list = useSelector((state: any)=> state.category.list);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        GetListCategoriesAction(dispatch);
+        SetCategoryAction(dispatch);
     }, []);
 
 

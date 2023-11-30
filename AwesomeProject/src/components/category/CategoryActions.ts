@@ -1,8 +1,13 @@
 import {Dispatch} from "react";
-import {AddCategoryAction, CategoryActionType, ICategoryCreate, ICategoryItem, SetCategoryAction} from "./types";
+import {
+    CategoryActionType, CreateCategoryActionType,
+    ICategoryCreate,
+    ICategoryItem,
+    SetCategoryActionType
+} from "./types";
 import http_common from "../../http_common";
 
-export const GetListCategoriesAction = (dispatch: Dispatch<SetCategoryAction>) => {
+export const SetCategoryAction = (dispatch: Dispatch<SetCategoryActionType>) => {
     http_common.get<ICategoryItem[]>("/api/categories/list")
         .then(resp => {
             const {data} = resp;
@@ -13,7 +18,7 @@ export const GetListCategoriesAction = (dispatch: Dispatch<SetCategoryAction>) =
         });
 }
 
-export const CreateCategoryAction = async (dispatch: Dispatch<AddCategoryAction>, model: ICategoryCreate) => {
+export const CreateCategoryAction = async (dispatch: Dispatch<CreateCategoryActionType>, model: ICategoryCreate) => {
     const formData = new FormData();
     formData.append("image", {
         uri: model.image,

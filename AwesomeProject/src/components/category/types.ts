@@ -22,14 +22,14 @@ export enum CategoryActionType {
     ADD_CATEGORY="ADD_CATEGORY",
 }
 //Задать новий набір елементів списку категорій
-export interface SetCategoryAction {
+export interface SetCategoryActionType {
     type: CategoryActionType.SET_CATEGORY_LIST,
     payload: ICategoryItem[]
 }
 //Додать нову категорію
-export interface AddCategoryAction {
+export interface CreateCategoryActionType {
     type: CategoryActionType.ADD_CATEGORY,
     payload: ICategoryItem
 }
 
-export type CategoryActions = SetCategoryAction | AddCategoryAction;
+export type CategoryActions = SetCategoryActionType | CreateCategoryActionType;

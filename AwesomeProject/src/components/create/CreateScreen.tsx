@@ -12,8 +12,7 @@ import {Controller, useForm} from "react-hook-form";
 import {useTheme} from "../../contexts/ThemeContext";
 import DocumentPicker from 'react-native-document-picker';
 import ScrollView = Animated.ScrollView;
-import http_common from "../../http_common";
-import {CategoryActionType, ICategoryCreate, ICategoryItem} from "../category/types";
+import {ICategoryCreate} from "../category/types";
 import {useDispatch} from "react-redux";
 import {CreateCategoryAction} from "../category/CategoryActions";
 
@@ -148,7 +147,7 @@ const CreateScreen = () => {
             description: ""
         },
     })
-    const onSubmit = async (data) => {
+    const onSubmit = async (data: any) => {
         try {
             const model: ICategoryCreate = {
                 image: pickedImage ? pickedImage: "",
@@ -164,7 +163,6 @@ const CreateScreen = () => {
     }
 
     return (
-        // <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
         <ScrollView style={styles.container}>
             <View style={styles.logoContainer}>
                 <Image style={styles.tinyLogo} resizeMode={'contain'} source={require('../../assets/logo.png')}/>
@@ -229,7 +227,6 @@ const CreateScreen = () => {
                     <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.loginBtn}>
                         <Text style={styles.loginBtnText}>Створити</Text>
                     </TouchableOpacity>
-                    {/* <Button title='fdsfs' onPress={handleSubmit}></Button> */}
                     <TouchableOpacity style={styles.rememberBlock} onPress={() => navigation.navigate('Home')}>
                         <Text style={styles.forgotText}>До списку</Text>
                     </TouchableOpacity>
