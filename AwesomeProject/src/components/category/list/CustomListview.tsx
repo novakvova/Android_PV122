@@ -18,11 +18,12 @@ const CustomListview: React.FC<IProps> = ({list}) => (
     <View style={styles.container}>
         <FlatList
             data={list}
-            renderItem={({ item }) => <CustomRow
-                title={item.name}
-                description={item.description}
-                // image_url={`https://slon.itstep.click/images/${item.image}`}
-                image_url={`${APP_ENV.BASE_URL}/images/${item.image}`}
+            renderItem={({ item }) =>
+                <CustomRow
+                    id={item.id}
+                    title={item.name}
+                    description={item.description}
+                    image_url={`${APP_ENV.BASE_URL}/images/${item.image}`}
             />}
         />
 

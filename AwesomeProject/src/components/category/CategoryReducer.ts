@@ -20,6 +20,14 @@ export const CategoryReducer = (state = init, action: CategoryActions): ICategor
                 list: [...state.list, item]
             };
         }
+
+        case CategoryActionType.DELETE_CATEGORY: {
+            const id = action.payload;
+            return {
+                ...state,
+                list: state.list.filter(x=>x.id!=id)
+            };
+        }
     }
     return state;
 }

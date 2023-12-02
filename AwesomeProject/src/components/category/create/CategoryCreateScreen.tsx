@@ -5,7 +5,7 @@ import {
     TextInput,
     Text,
     StyleSheet,
-    TouchableOpacity, Animated, Image
+    TouchableOpacity, Animated, Image, Button
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Controller, useForm} from "react-hook-form";

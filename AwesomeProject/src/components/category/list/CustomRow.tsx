@@ -1,14 +1,16 @@
 import React, {FC} from 'react';
-import {View, Text, StyleSheet, Image, Button} from 'react-native';
+import {View, Text, StyleSheet, Image, Button, TouchableOpacity, Alert} from 'react-native';
 import Icon from "../../icon/Icon";
+import {useDispatch} from "react-redux";
+import {DeleteCategoryAction} from "../CategoryActions";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
         padding: 10,
-        marginLeft:16,
-        marginRight:16,
+        marginLeft: 16,
+        marginRight: 16,
         marginTop: 8,
         marginBottom: 8,
         borderRadius: 5,
@@ -40,45 +42,86 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
     },
+    myIconStyle: {
+        width: '100%',
+        alignContent: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        padding: 5,
+    },
 });
 
 interface IProps {
+    id: number,
     title: string,
     description: string;
     image_url: string
 }
 
-const CustomRow: FC<IProps> = ({ title, description, image_url }) => (
-    <View style={styles.container}>
-        <Image source={{ uri: image_url }} style={styles.photo} />
-        <View style={styles.container_text}>
-            <Text style={styles.title}>
-                {title}
-            </Text>
-            <Text style={styles.description}>
-                {description}
-            </Text>
+const CustomRow: FC<IProps> = ({id, title, description, image_url}) => {
+
+    const dispatch = useDispatch();
+
+    const deleteItem = (id: number) => {
+        Alert.alert(
+            "Видалення",
+            "Ви дійсно бажаєте видалить?",
+            [
+                {
+                    style: 'destructive',
+                    text: "Видалить",
+                    onPress: () => {
+                        DeleteCategoryAction(dispatch, id);
+                    },
+                },
+                {
+                    text: "Скасувати",
+                },
+            ]
+        );
+    }
+
+    return (
+        <View style={styles.container}>
+            <Image source={{uri: image_url}} style={styles.photo}/>
+            <View style={styles.container_text}>
+                <Text style={styles.title}>
+                    {title}
+                </Text>
+                <Text style={styles.description}>
+                    {description}
+                </Text>
+            </View>
+
+            <View style={styles.container_buttons}>
+                <Text>
+                    <TouchableOpacity onPress={() => {
+                        console.log("Edit item", id)
+                    }} style={styles.myIconStyle}>
+                        <Icon
+                            type={"edit"}
+                            size={35}
+                            focused={false}
+                            isDark={false}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        //console.log("Delete item", id)
+                        deleteItem(id);
+                    }} style={styles.myIconStyle}>
+                        <Icon
+                            type={"delete"}
+                            size={35}
+                            focused={false}
+                            isDark={false}
+                        />
+                    </TouchableOpacity>
+                </Text>
+            </View>
+
         </View>
-
-        <View style={styles.container_buttons}>
-            <Text style={styles.title}>
-
-                <Icon
-                    type={"edit"}
-                    size={35}
-                    focused={false}
-                    isDark={false}
-                />
-                <Icon
-                    type={"delete"}
-                    size={35}
-                    focused={false}
-                    isDark={false}
-                />
-            </Text>
-        </View>
-
-    </View>
-);
+    );
+}
 
 export default CustomRow;

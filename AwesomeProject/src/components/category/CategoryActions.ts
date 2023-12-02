@@ -1,6 +1,6 @@
 import {Dispatch} from "react";
 import {
-    CategoryActionType, CreateCategoryActionType,
+    CategoryActionType, CreateCategoryActionType, DeleteCategoryActionType,
     ICategoryCreate,
     ICategoryItem,
     SetCategoryActionType
@@ -35,4 +35,14 @@ export const CreateCategoryAction = async (dispatch: Dispatch<CreateCategoryActi
         });
     // console.log("Category info create", resp.data);
     dispatch({type: CategoryActionType.ADD_CATEGORY, payload: resp.data});
+}
+
+export const DeleteCategoryAction = (dispatch: Dispatch<DeleteCategoryActionType>, id: number) => {
+    http_common.delete(`/api/categories/${id}`)
+        .then(resp => {
+            dispatch({
+                type: CategoryActionType.DELETE_CATEGORY,
+                payload: id
+            });
+        });
 }

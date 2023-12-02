@@ -20,6 +20,7 @@ export interface  ICategoryReducer {
 export enum CategoryActionType {
     SET_CATEGORY_LIST = "SET_CATEGORY_LIST",
     ADD_CATEGORY="ADD_CATEGORY",
+    DELETE_CATEGORY="DELETE_CATEGORY"
 }
 //Задать новий набір елементів списку категорій
 export interface SetCategoryActionType {
@@ -31,5 +32,9 @@ export interface CreateCategoryActionType {
     type: CategoryActionType.ADD_CATEGORY,
     payload: ICategoryItem
 }
+export interface DeleteCategoryActionType {
+    type: CategoryActionType.DELETE_CATEGORY,
+    payload: number
+}
 
-export type CategoryActions = SetCategoryActionType | CreateCategoryActionType;
+export type CategoryActions = SetCategoryActionType | CreateCategoryActionType | DeleteCategoryActionType;
