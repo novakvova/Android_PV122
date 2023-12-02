@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import {View, Text, StyleSheet, Image, Button} from 'react-native';
+import Icon from "../../icon/Icon";
 
 const styles = StyleSheet.create({
     container: {
@@ -23,6 +24,13 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         marginLeft: 12,
         justifyContent: 'center',
+    },
+
+    container_buttons: {
+        flex: 0,
+        flexDirection: 'column',
+        marginRight: 2,
+        justifyContent: 'flex-end',
     },
     description: {
         fontSize: 11,
@@ -49,6 +57,24 @@ const CustomRow: FC<IProps> = ({ title, description, image_url }) => (
             </Text>
             <Text style={styles.description}>
                 {description}
+            </Text>
+        </View>
+
+        <View style={styles.container_buttons}>
+            <Text style={styles.title}>
+
+                <Icon
+                    type={"edit"}
+                    size={35}
+                    focused={false}
+                    isDark={false}
+                />
+                <Icon
+                    type={"delete"}
+                    size={35}
+                    focused={false}
+                    isDark={false}
+                />
             </Text>
         </View>
 

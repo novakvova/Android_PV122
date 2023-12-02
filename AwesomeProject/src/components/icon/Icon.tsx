@@ -2,7 +2,7 @@ import React from "react";
 import { SvgXml } from "react-native-svg";
 import { StyleSheet, View } from "react-native";
 
-import { addIcon, educationIcon, profileIcon, scheduleIcon } from "./Icons";
+import {addIcon, editIcon, educationIcon, profileIcon, scheduleIcon} from "./Icons";
 import { deleteIcon } from "./Icons";
 import { commentIcon } from "./Icons";
 import { arrowLeftIcon } from "./Icons";
@@ -24,6 +24,10 @@ export default function Icon({ type, focused, size = 30, inversia, isDark }: { t
         case "add":
             xml = addIcon(focused);
             break;
+        case "edit":
+            xml = editIcon(focused);
+            break;
+
         case "delete":
             xml = deleteIcon(focused);
             break;

@@ -17,7 +17,7 @@ import {useDispatch} from "react-redux";
 import {CreateCategoryAction} from "../CategoryActions";
 
 
-const CreateScreen = () => {
+const CategoryCreateScreen = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const [pickedImage, setPickedImage] = useState<string|null>(null);
@@ -147,6 +147,7 @@ const CreateScreen = () => {
             description: ""
         },
     })
+
     const onSubmit = async (data: any) => {
         try {
             const model: ICategoryCreate = {
@@ -241,4 +242,4 @@ const CreateScreen = () => {
     );
 };
 
-export default CreateScreen;
+export default CategoryCreateScreen;

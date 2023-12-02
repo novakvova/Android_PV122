@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import {StyleSheet, Text, View} from "react-native";
 import CustomListview from "./CustomListview";
 import {useDispatch, useSelector} from "react-redux";
-import {SetCategoryAction} from "../category/CategoryActions";
-const HomeScreen = () => {
+import {SetCategoryAction} from "../CategoryActions";
+const CategoryListScreen = () => {
     const list = useSelector((state: any)=> state.category.list);
 
     const dispatch = useDispatch();
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
         paddingBottom: 100
     }
 });
-export default HomeScreen;
+export default CategoryListScreen;

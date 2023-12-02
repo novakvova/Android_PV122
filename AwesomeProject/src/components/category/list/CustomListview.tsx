@@ -2,7 +2,7 @@ import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import CustomRow from './CustomRow';
 import {ICategoryItem} from "./types";
-import {APP_ENV} from "../../env";
+import {APP_ENV} from "../../../env";
 
 const styles = StyleSheet.create({
     container: {

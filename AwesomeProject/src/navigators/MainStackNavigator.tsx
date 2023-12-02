@@ -3,9 +3,9 @@ import {useTheme} from "../contexts/ThemeContext";
 import {StyleSheet, View} from "react-native";
 import React from "react";
 // import {BlurView} from "expo-blur";
-import HomeScreen from "../components/home/HomeScreen";
+import CategoryListScreen from "../components/category/list/CategoryListScreen";
 import Icon from "../components/icon/Icon";
-import CreateScreen from "../components/category/create/CreateScreen";
+import CategoryCreateScreen from "../components/category/create/CategoryCreateScreen";
 import TestScreen from "../components/test/TestScreen";
 
 const MainTab = createBottomTabNavigator();
@@ -59,7 +59,7 @@ export const MainStackNavigator = () => {
 
                 <MainTab.Screen
                     name={'Home'}
-                    component={HomeScreen}
+                    component={CategoryListScreen}
                     options={{
                         title: 'Home',
                         headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },
@@ -77,7 +77,7 @@ export const MainStackNavigator = () => {
 
                 <MainTab.Screen
                     name={'Create'}
-                    component={CreateScreen}
+                    component={CategoryCreateScreen}
                     options={{
                         title: 'Add',
                         headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },

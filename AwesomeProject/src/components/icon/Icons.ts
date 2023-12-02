@@ -1,7 +1,5 @@
 import { useTheme } from "../../contexts/ThemeContext";
 
-
-
 export const addIcon = (focused:any) => {
     const color = focused ? "#E8E8E8" : "#FF6C00";
     return `<svg viewBox="0 0 25 25" fill="none">
@@ -11,11 +9,9 @@ export const addIcon = (focused:any) => {
   `;
 };
 export const deleteIcon = (focused:any) => {
-    const color = !focused ? "#E8E8E8" : "#FF6C00";
-    return `<svg viewBox="0 0 37 37" fill="none">
-  <circle cx="18.4999" cy="18.5" r="12" transform="rotate(-45 18.4999 18.5)" fill="white" stroke="${color}"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2574 13.5503L13.5503 14.2574L17.7929 18.5L13.5503 22.7426L14.2574 23.4497L18.5 19.2071L22.7426 23.4497L23.4498 22.7426L19.2071 18.5L23.4498 14.2574L22.7426 13.5503L18.5 17.7929L14.2574 13.5503Z" fill="${color}"/>
-  </svg>
+    const color = focused ? "red" : "red";
+    return `
+    <svg fill="#f20707" viewBox="-3.5 0 19 19" xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg" stroke="#f20707"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z"></path></g></svg>
   `;
 };
 export const commentIcon = (focused:any) => {
@@ -129,6 +125,13 @@ export const createIcon = (focused:any, isDark:boolean) => {
   `;
 };
 
+export const editIcon = (focused:any) => {
+    const { colors } = useTheme();
+    const color = focused ? colors.primary : colors.icon;
+    return `
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#0132f4"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 3.99997H6C4.89543 3.99997 4 4.8954 4 5.99997V18C4 19.1045 4.89543 20 6 20H18C19.1046 20 20 19.1045 20 18V12M18.4142 8.41417L19.5 7.32842C20.281 6.54737 20.281 5.28104 19.5 4.5C18.7189 3.71895 17.4526 3.71895 16.6715 4.50001L15.5858 5.58575M18.4142 8.41417L12.3779 14.4505C12.0987 14.7297 11.7431 14.9201 11.356 14.9975L8.41422 15.5858L9.00257 12.6441C9.08001 12.2569 9.27032 11.9013 9.54951 11.6221L15.5858 5.58575M18.4142 8.41417L15.5858 5.58575" stroke="#0011ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+  `;
+};
 
 export const photoIcon = (focused:any, inversia:any) => {
     let color = !focused ? "#BDBDBD" : "#FF6C00";
