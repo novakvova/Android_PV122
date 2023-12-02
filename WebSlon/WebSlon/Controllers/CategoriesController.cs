@@ -33,6 +33,18 @@ namespace WebSlon.Controllers
             return Ok(model);
         }
 
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var cat = await _appEFContext.Categories
+                 .Where(x => x.IsDeleted == false)
+                .SingleOrDefaultAsync(x => x.Id == id);
+            if (cat is null)
+                return NotFound();
+            var model = _mapper.Map<CategoryItemViewModel>(cat);
+            return Ok(model);
+        }
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromForm] CategoryCreateViewModel model)
         {

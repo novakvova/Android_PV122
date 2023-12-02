@@ -5,7 +5,7 @@ import React from "react";
 // import {BlurView} from "expo-blur";
 import HomeScreen from "../components/home/HomeScreen";
 import Icon from "../components/icon/Icon";
-import CreateScreen from "../components/create/CreateScreen";
+import CreateScreen from "../components/category/create/CreateScreen";
 import TestScreen from "../components/test/TestScreen";
 
 const MainTab = createBottomTabNavigator();

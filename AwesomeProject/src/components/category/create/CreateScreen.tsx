@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Controller, useForm} from "react-hook-form";
-import {useTheme} from "../../contexts/ThemeContext";
+import {useTheme} from "../../../contexts/ThemeContext";
 import DocumentPicker from 'react-native-document-picker';
 import ScrollView = Animated.ScrollView;
-import {ICategoryCreate} from "../category/types";
+import {ICategoryCreate} from "../types";
 import {useDispatch} from "react-redux";
-import {CreateCategoryAction} from "../category/CategoryActions";
+import {CreateCategoryAction} from "../CategoryActions";
 
 
 const CreateScreen = () => {
@@ -155,6 +155,8 @@ const CreateScreen = () => {
                 description: data.description
             }
             await CreateCategoryAction(dispatch, model);
+
+            // @ts-ignore
             navigation.navigate('Home', { shouldUpdateDatabase: true });
         }
         catch(error) {
@@ -165,7 +167,7 @@ const CreateScreen = () => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.logoContainer}>
-                <Image style={styles.tinyLogo} resizeMode={'contain'} source={require('../../assets/logo.png')}/>
+                <Image style={styles.tinyLogo} resizeMode={'contain'} source={require('../../../assets/logo.png')}/>
             </View>
             <View style={styles.contentContainer}>
                 <Text style={styles.loginText}>Створити категорію</Text>
@@ -227,6 +229,7 @@ const CreateScreen = () => {
                     <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.loginBtn}>
                         <Text style={styles.loginBtnText}>Створити</Text>
                     </TouchableOpacity>
+                    {/*@ts-ignore*/}
                     <TouchableOpacity style={styles.rememberBlock} onPress={() => navigation.navigate('Home')}>
                         <Text style={styles.forgotText}>До списку</Text>
                     </TouchableOpacity>
