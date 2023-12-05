@@ -1,7 +1,7 @@
 import {Dispatch} from "react";
 import {
-    CategoryActionType, CreateCategoryActionType, DeleteCategoryActionType,
-    ICategoryCreate,
+    CategoryActionType, CreateCategoryActionType, DeleteCategoryActionType, EditCategoryActionType,
+    ICategoryCreate, ICategoryEdit,
     ICategoryItem,
     SetCategoryActionType
 } from "./types";
@@ -35,6 +35,33 @@ export const CreateCategoryAction = async (dispatch: Dispatch<CreateCategoryActi
         });
     // console.log("Category info create", resp.data);
     dispatch({type: CategoryActionType.ADD_CATEGORY, payload: resp.data});
+}
+
+function isValidUrl(url: string) {
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
+    return urlRegex.test(url);
+}
+
+export const EditCategoryAction = async (dispatch: Dispatch<EditCategoryActionType>, model: ICategoryEdit) => {
+    const formData = new FormData();
+    if(isValidUrl(model.image))
+        model.image="";
+    console.log("Send data to edit", model);
+    formData.append("image", {
+        uri: model.image,
+        type: "image/jpeg",
+        name: "my.jpg"
+    });
+    formData.append("name", model.name);
+    formData.append("description", model.description);
+    // const resp = await http_common.post<ICategoryItem>(`/api/categories/edit/${model.id}`,
+    //     formData,{
+    //         headers: {
+    //             "Content-Type": "multipart/form-data"
+    //         }
+    //     });
+    // // console.log("Category info create", resp.data);
+    // dispatch({type: CategoryActionType.EDIT_CATEGORY, payload: resp.data});
 }
 
 export const DeleteCategoryAction = (dispatch: Dispatch<DeleteCategoryActionType>, id: number) => {

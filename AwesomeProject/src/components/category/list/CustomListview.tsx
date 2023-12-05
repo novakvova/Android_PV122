@@ -27,6 +27,8 @@ const CustomListview: React.FC<IProps> = ({list}) => (
             />}
         />
 
+
+
     </View>
 );
 

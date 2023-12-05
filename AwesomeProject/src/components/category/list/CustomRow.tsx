@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, Image, Button, TouchableOpacity, Alert} from 're
 import Icon from "../../icon/Icon";
 import {useDispatch} from "react-redux";
 import {DeleteCategoryAction} from "../CategoryActions";
+import {useNavigation} from "@react-navigation/native";
 
 const styles = StyleSheet.create({
     container: {
@@ -61,6 +62,8 @@ interface IProps {
 
 const CustomRow: FC<IProps> = ({id, title, description, image_url}) => {
 
+    const navigation = useNavigation();
+
     const dispatch = useDispatch();
 
     const deleteItem = (id: number) => {
@@ -98,6 +101,8 @@ const CustomRow: FC<IProps> = ({id, title, description, image_url}) => {
                 <Text>
                     <TouchableOpacity onPress={() => {
                         console.log("Edit item", id)
+                        navigation.navigate('Edit', { id });
+
                     }} style={styles.myIconStyle}>
                         <Icon
                             type={"edit"}

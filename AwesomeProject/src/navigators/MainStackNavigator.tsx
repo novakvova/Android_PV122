@@ -1,12 +1,13 @@
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import {useTheme} from "../contexts/ThemeContext";
-import {StyleSheet, View} from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useTheme } from "../contexts/ThemeContext";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 // import {BlurView} from "expo-blur";
 import CategoryListScreen from "../components/category/list/CategoryListScreen";
 import Icon from "../components/icon/Icon";
 import CategoryCreateScreen from "../components/category/create/CategoryCreateScreen";
 import TestScreen from "../components/test/TestScreen";
+import CategoryEditScreen from "../components/category/edit/CategoryEditScreen";
 
 const MainTab = createBottomTabNavigator();
 
@@ -22,22 +23,22 @@ export const MainStackNavigator = () => {
                     tabBarStyle: {
                         shadowOffset: {
                             width: 0,
-                            height: 12,
+                            height: 12
                         },
                         shadowOpacity: 0.58,
                         shadowRadius: 16.0,
                         elevation: 24,
-                        position: 'absolute',
+                        position: "absolute",
                         bottom: 0,
                         padding: 10,
-                        width: '100%',
+                        width: "100%",
                         height: 84,
                         zIndex: 0,
                         borderTopWidth: 0.3,
-                        borderTopColor: colors.icon,
+                        borderTopColor: colors.icon
                     },
 
-                    headerShown: false,
+                    headerShown: false
                     // tabBarBackground: () => (
                     //     <BlurView
                     //
@@ -58,10 +59,10 @@ export const MainStackNavigator = () => {
             >
 
                 <MainTab.Screen
-                    name={'Home'}
+                    name={"Home"}
                     component={CategoryListScreen}
                     options={{
-                        title: 'Home',
+                        title: "Home",
                         headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },
                         headerTitleStyle: { color: colors.mainText },
                         tabBarIcon: ({ focused }) => (
@@ -71,15 +72,15 @@ export const MainStackNavigator = () => {
                                 focused={focused}
                                 isDark={isDark}
                             />
-                        ),
+                        )
                     }}
                 />
 
                 <MainTab.Screen
-                    name={'Create'}
+                    name={"Create"}
                     component={CategoryCreateScreen}
                     options={{
-                        title: 'Add',
+                        title: "Add",
                         headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },
                         headerTitleStyle: { color: colors.mainText },
                         tabBarIcon: ({ focused }) => (
@@ -89,15 +90,15 @@ export const MainStackNavigator = () => {
                                 focused={focused}
                                 isDark={isDark}
                             />
-                        ),
+                        )
                     }}
                 />
 
                 <MainTab.Screen
-                    name={'Test'}
+                    name={"Test"}
                     component={TestScreen}
                     options={{
-                        title: 'Test',
+                        title: "Test",
                         headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },
                         headerTitleStyle: { color: colors.mainText },
                         tabBarIcon: ({ focused }) => (
@@ -107,7 +108,7 @@ export const MainStackNavigator = () => {
                                 focused={focused}
                                 isDark={isDark}
                             />
-                        ),
+                        )
                     }}
                 />
 
@@ -115,4 +116,4 @@ export const MainStackNavigator = () => {
         </View>
 
     );
-}
+};
