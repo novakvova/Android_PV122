@@ -7,10 +7,12 @@ import {NavigationContainer} from "@react-navigation/native";
 import Router from "./navigators/Router";
 import { store } from "./store";
 import { Provider } from "react-redux";
+import {APP_ENV} from "./env";
 
 
 
 const App = () => {
+    console.log("UrL site", APP_ENV.BASE_URL);
     // const { colors, isDark } = useTheme();
     return (
 

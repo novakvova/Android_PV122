@@ -156,6 +156,8 @@ const CategoryEditScreen = () => {
 
 
     useEffect(() => {
+
+        // @ts-ignore
         const id = route.params?.id;
         http_common.get<ICategoryItem>(`/api/categories/${id}`)
             .then(resp => {
@@ -171,7 +173,8 @@ const CategoryEditScreen = () => {
         try {
             let id=0;
             if(route.params!=undefined) {
-              id=route.params.id as number;
+                // @ts-ignore
+                id=route.params.id as number;
             }
             //let id=route.params?.id;
             const model: ICategoryEdit = {
@@ -253,7 +256,7 @@ const CategoryEditScreen = () => {
 
                 <View style={{marginBottom: 50}}>
                     <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.loginBtn}>
-                        <Text style={styles.loginBtnText}>Створити</Text>
+                        <Text style={styles.loginBtnText}>Зберегти</Text>
                     </TouchableOpacity>
                     {/*@ts-ignore*/}
                     <TouchableOpacity style={styles.rememberBlock} onPress={() => navigation.navigate('Home')}>

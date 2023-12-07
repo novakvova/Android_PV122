@@ -7,25 +7,32 @@ const init: ICategoryReducer = {
 export const CategoryReducer = (state = init, action: CategoryActions): ICategoryReducer => {
     switch(action.type) {
         case CategoryActionType.SET_CATEGORY_LIST: {
-            const list = action.payload as Array<ICategoryItem>;
             return {
                 ...state,
-                list
+                list: action.payload
             }
         }
         case CategoryActionType.ADD_CATEGORY: {
-            const item = action.payload as ICategoryItem;
             return {
                 ...state,
-                list: [...state.list, item]
+                list: [...state.list, action.payload]
+            };
+        }
+
+        case CategoryActionType.EDIT_CATEGORY: {
+            //Update item
+            return {
+                ...state,
+                list: state.list.map(item =>
+                    item.id === action.payload.id ? { ...item, ...action.payload } : item
+                )
             };
         }
 
         case CategoryActionType.DELETE_CATEGORY: {
-            const id = action.payload;
             return {
                 ...state,
-                list: state.list.filter(x=>x.id!=id)
+                list: state.list.filter(x=>x.id!=action.payload)
             };
         }
     }
