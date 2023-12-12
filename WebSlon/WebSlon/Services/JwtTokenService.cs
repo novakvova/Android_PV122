@@ -20,7 +20,7 @@ namespace WebSlon.Services
             _userManager = userManager;
         }
 
-        public async Task<string> CreateToken(UserEntity user)
+        public async Task<string> CreateTokenAsync(UserEntity user)
         {
             var roles = await _userManager.GetRolesAsync(user);
             List<Claim> claims = new()

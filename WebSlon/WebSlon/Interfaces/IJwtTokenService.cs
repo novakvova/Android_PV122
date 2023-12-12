@@ -4,6 +4,6 @@ namespace WebSlon.Interfaces
 {
     public interface IJwtTokenService
     {
-        Task<string> CreateToken(UserEntity user);
+        Task<string> CreateTokenAsync(UserEntity user);
     }
 }

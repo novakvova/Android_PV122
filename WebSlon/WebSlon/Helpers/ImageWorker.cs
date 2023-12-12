@@ -1,4 +1,5 @@
-﻿using SixLabors.ImageSharp;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Webp;
 
 namespace WebSlon.Helpers
@@ -13,6 +14,12 @@ namespace WebSlon.Helpers
                 string fileName = await SaveBytesCompresAsync(ms.ToArray());
                 return fileName;
             }
+        }
+        public static byte [] Base64ToBytesArray(this string base64)
+        {
+            if(base64.Contains(","))
+                base64 = base64.Split(',')[1];
+            return Convert.FromBase64String(base64);
         }
 
         public static async Task<string> SaveImageAsync(byte[] bytes)
