@@ -5,6 +5,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import CategoryEditScreen from "../components/category/edit/CategoryEditScreen";
 import { createStackNavigator, StackNavigationOptions } from "@react-navigation/stack";
 import LoginScreen from "../components/account/login/LoginScreen";
+import RegisterScreen from "../components/account/register/RegisterScreen";
 
 const Stack = createStackNavigator();
 
@@ -22,9 +23,15 @@ const Router = () => {
                     options={{ title: 'Вхід' }}
                 />
                 <Stack.Screen
+                    name="Register"
+                    component={RegisterScreen}
+                    options={{ title: 'Реєстрація' }}
+                />
+                <Stack.Screen
                     name="TopNavbar"
                     component={MainStackNavigator}
                 />
+                {/*<MainStackNavigator />*/}
                 <Stack.Screen
                     name="Edit"
                     component={CategoryEditScreen}

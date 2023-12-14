@@ -12,14 +12,17 @@ import {Controller, useForm} from "react-hook-form";
 import {useTheme} from "../../../contexts/ThemeContext";
 import DocumentPicker from 'react-native-document-picker';
 import ScrollView = Animated.ScrollView;
-import {IAuthResult, ILogin} from "../types";
+import {IAuthResult, ILogin, IRegister} from "../types";
 import {useDispatch} from "react-redux";
 import http_common from "../../../http_common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import {CreateCategoryAction} from "../CategoryActions";
+import RNFS from 'react-native-fs';
 
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
+    const [pickedImage, setPickedImage] = useState<string|null>(null);
+
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
@@ -63,6 +66,7 @@ const LoginScreen = () => {
         loginText: {
             color: colors.mainText,
             fontSize: 26,
+            marginBottom: 0,
             fontWeight: 'bold',
             fontFamily: 'Avenir'
 
@@ -109,7 +113,37 @@ const LoginScreen = () => {
             fontSize: 14
         }
     });
-   
+
+    const routeNames = navigation.getState().routeNames;
+
+
+    const pickImage = async () => {
+        try {
+            const result = await DocumentPicker.pick({
+                type: [DocumentPicker.types.images],
+            });
+            if(result!=null) {
+                if(result.length>0) {
+                    const selectImage = result[0];
+                    if(selectImage!=null) {
+                        setPickedImage(selectImage.uri);
+                        console.log("Select image", selectImage);
+                    }
+                }
+            }
+            // Handle the picked image, for example, set it in state
+            //setPickedImage(result.uri);
+
+        } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+                // User cancelled the picker
+                console.log('User cancelled the image picker');
+            } else {
+                // Handle other errors
+                console.error('Error picking image:', err);
+            }
+        }
+    };
 
     useEffect(() => {
         // Load the JWT token from AsyncStorage when the component mounts
@@ -135,25 +169,35 @@ const LoginScreen = () => {
         formState: {errors},
     } = useForm({
         defaultValues: {
+            firstName: "",
+            lastName: "",
+            imageBase64: "",
             email: "",
-            password: ""
+            password: "",
         },
     })
 
     const onSubmit = async (data: any) => {
         try {
-            const model: ILogin= {
+            //console.log("Resp", data);
+            const base64 = await RNFS.readFile( pickedImage ? pickedImage: "", 'base64');
+            //console.log("base64 = ", base64);
+            const model: IRegister= {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                imageBase64: base64,
                 email: data.email,
                 password: data.password
             }
-            console.log("login", model);
-            const result = await http_common.post<IAuthResult>("/api/account/login", model);
-            const auth = result.data;
-            console.log("Login result", auth.token);
-            //await CreateCategoryAction(dispatch, model);
-            await AsyncStorage.setItem('jwtToken', auth.token);
+            console.log("Register", model);
+            // const result = await http_common.post<IAuthResult>("/api/account/register", model);
+            // const auth = result.data;
+            // console.log("Login result", auth.token);
+            // // //await CreateCategoryAction(dispatch, model);
+            // await AsyncStorage.setItem('jwtToken', auth.token);
+
             // @ts-ignore
-            //navigation.navigate('Home', { shouldUpdateDatabase: true });
+            navigation.navigate('CategoryListScreen', { shouldUpdateDatabase: true });
         }
         catch(error) {
             console.log("Server error login", error);
@@ -162,11 +206,56 @@ const LoginScreen = () => {
 
     return (
         <ScrollView style={form_styles.container}>
-            <View style={form_styles.logoContainer}>
-                <Image style={form_styles.tinyLogo} resizeMode={'contain'} source={require('../../../assets/logo.png')}/>
-            </View>
             <View style={form_styles.contentContainer}>
-                <Text style={form_styles.loginText}>Вхід</Text>
+                {routeNames.map((routeName) => (
+                    <Text key={routeName}>{routeName}</Text>
+                ))}
+                <Text style={form_styles.loginText}>Реєстрація</Text>
+
+                <View style={{}}>
+                    <Text style={form_styles.label}>Прізвище</Text>
+                    <Controller
+                        control={control}
+                        rules={{
+                            required: true,
+                        }}
+                        render={({field: {onChange, onBlur, value}}) => (
+                            <TextInput
+                                multiline={false}
+                                style={form_styles.input}
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                                placeholder="Вкажіть прізвище"
+                            />
+                        )}
+                        name="lastName"
+                    />
+                    {errors.lastName && <Text style={{color: 'red'}}>Пошта є обов'язковою!</Text>}
+                </View>
+
+                <View style={{}}>
+                    <Text style={form_styles.label}>Ім'я</Text>
+                    <Controller
+                        control={control}
+                        rules={{
+                            required: true,
+                        }}
+                        render={({field: {onChange, onBlur, value}}) => (
+                            <TextInput
+                                multiline={false}
+                                style={form_styles.input}
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                                placeholder="Вкажіть прізвище"
+                            />
+                        )}
+                        name="firstName"
+                    />
+                    {errors.firstName && <Text style={{color: 'red'}}>Пошта є обов'язковою!</Text>}
+                </View>
+
                 <View style={{}}>
                     <Text style={form_styles.label}>Email</Text>
                     <Controller
@@ -187,6 +276,19 @@ const LoginScreen = () => {
                         name="email"
                     />
                     {errors.email && <Text style={{color: 'red'}}>Пошта є обов'язковою!</Text>}
+                </View>
+
+                {pickedImage && (
+                    <View>
+                        <Image source={{ uri: pickedImage }} style={{ width: 150, height: 150 }} />
+                    </View>
+                )}
+                <View>
+
+                    <TouchableOpacity onPress={pickImage} style={form_styles.loginBtn}>
+                        <Text style={form_styles.loginBtnText}>Обрати фото</Text>
+                    </TouchableOpacity>
+
                 </View>
 
                 <View style={{}}>
@@ -214,11 +316,11 @@ const LoginScreen = () => {
 
                 <View>
                     <TouchableOpacity onPress={handleSubmit(onSubmit)} style={form_styles.loginBtn}>
-                        <Text style={form_styles.loginBtnText}>Вхід</Text>
+                        <Text style={form_styles.loginBtnText}>Реєструватися</Text>
                     </TouchableOpacity>
                     {/*@ts-ignore*/}
-                    <TouchableOpacity style={form_styles.rememberBlock} onPress={() => navigation.navigate('Register')}>
-                        <Text style={form_styles.forgotText}>Реєстрація</Text>
+                    <TouchableOpacity style={form_styles.rememberBlock} onPress={() => navigation.navigate('Login')}>
+                        <Text style={form_styles.forgotText}>Вхід</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -228,4 +330,4 @@ const LoginScreen = () => {
     );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
