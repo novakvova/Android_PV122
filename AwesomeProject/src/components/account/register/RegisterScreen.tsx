@@ -190,11 +190,11 @@ const RegisterScreen = () => {
                 password: data.password
             }
             console.log("Register", model);
-            // const result = await http_common.post<IAuthResult>("/api/account/register", model);
-            // const auth = result.data;
-            // console.log("Login result", auth.token);
-            // // //await CreateCategoryAction(dispatch, model);
-            // await AsyncStorage.setItem('jwtToken', auth.token);
+            const result = await http_common.post<IAuthResult>("/api/account/register", model);
+            const auth = result.data;
+            console.log("Login result", auth.token);
+            // //await CreateCategoryAction(dispatch, model);
+            await AsyncStorage.setItem('jwtToken', auth.token);
 
             // @ts-ignore
             navigation.reset({

@@ -39,25 +39,8 @@ export const MainStackNavigator = () => {
                     },
 
                     headerShown: false
-                    // tabBarBackground: () => (
-                    //     <BlurView
-                    //
-                    //         tint={isDark ? "dark" : "light"}
-                    //         intensity={100}
-                    //         style={StyleSheet.absoluteFillObject}
-                    //
-                    //     >
-                    //         <View
-                    //             style={{
-                    //                 height: 96,
-                    //
-                    //             }}
-                    //         />
-                    //     </BlurView>
-                    // ),
                 }}
             >
-
                 <MainTab.Screen
                     name={"Home"}
                     component={CategoryListScreen}

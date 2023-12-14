@@ -16,6 +16,7 @@ import {IAuthResult, ILogin} from "../types";
 import {useDispatch} from "react-redux";
 import http_common from "../../../http_common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {LoginUserAction} from "../AuthActions";
 // import {CreateCategoryAction} from "../CategoryActions";
 
 
@@ -147,11 +148,7 @@ const LoginScreen = () => {
                 password: data.password
             }
             console.log("login", model);
-            const result = await http_common.post<IAuthResult>("/api/account/login", model);
-            const auth = result.data;
-            console.log("Login result", auth.token);
-            //await CreateCategoryAction(dispatch, model);
-            await AsyncStorage.setItem('jwtToken', auth.token);
+            await LoginUserAction(dispatch, model);
             // @ts-ignore
             //navigation.navigate('Home', { shouldUpdateDatabase: true });
         }
