@@ -197,7 +197,10 @@ const RegisterScreen = () => {
             // await AsyncStorage.setItem('jwtToken', auth.token);
 
             // @ts-ignore
-            navigation.navigate('CategoryListScreen', { shouldUpdateDatabase: true });
+            navigation.reset({
+                routes: [{ name: 'TopNavbar' }],
+            });
+            //navigation.navigate('CategoryListScreen', { shouldUpdateDatabase: true });
         }
         catch(error) {
             console.log("Server error login", error);
@@ -207,9 +210,7 @@ const RegisterScreen = () => {
     return (
         <ScrollView style={form_styles.container}>
             <View style={form_styles.contentContainer}>
-                {routeNames.map((routeName) => (
-                    <Text key={routeName}>{routeName}</Text>
-                ))}
+
                 <Text style={form_styles.loginText}>Реєстрація</Text>
 
                 <View style={{}}>

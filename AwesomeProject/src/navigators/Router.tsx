@@ -17,6 +17,7 @@ const Router = () => {
     return (
         <View style={{ backgroundColor: colors.background, flex: 1 }}>
             <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="LoginScreen" >
+
                 <Stack.Screen
                     name="Login"
                     component={LoginScreen}
@@ -28,14 +29,13 @@ const Router = () => {
                     options={{ title: 'Реєстрація' }}
                 />
                 <Stack.Screen
-                    name="TopNavbar"
-                    component={MainStackNavigator}
-                />
-                {/*<MainStackNavigator />*/}
-                <Stack.Screen
                     name="Edit"
                     component={CategoryEditScreen}
                     options={{ title: 'Редагувати' }}
+                />
+                <Stack.Screen
+                    name="TopNavbar"
+                    component={MainStackNavigator}
                 />
             </Stack.Navigator>
         </View>
