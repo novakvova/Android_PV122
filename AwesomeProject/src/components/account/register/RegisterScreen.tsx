@@ -193,11 +193,10 @@ const RegisterScreen = () => {
             const result = await http_common.post<IAuthResult>("/api/account/register", model);
             const auth = result.data;
             console.log("Login result", auth.token);
-            // //await CreateCategoryAction(dispatch, model);
             await AsyncStorage.setItem('jwtToken', auth.token);
-
             // @ts-ignore
             navigation.reset({
+                // @ts-ignore
                 routes: [{ name: 'TopNavbar' }],
             });
             //navigation.navigate('CategoryListScreen', { shouldUpdateDatabase: true });

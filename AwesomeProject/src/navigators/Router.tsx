@@ -6,6 +6,8 @@ import CategoryEditScreen from "../components/category/edit/CategoryEditScreen";
 import { createStackNavigator, StackNavigationOptions } from "@react-navigation/stack";
 import LoginScreen from "../components/account/login/LoginScreen";
 import RegisterScreen from "../components/account/register/RegisterScreen";
+import {useSelector} from "react-redux";
+import {IAuthReducer} from "../components/account/types";
 
 const Stack = createStackNavigator();
 
@@ -13,10 +15,11 @@ const Stack = createStackNavigator();
 
 
 const Router = () => {
+    const {isAuth} = useSelector((store: any)=>store.auth as IAuthReducer);
     const { colors, isDark } = useTheme();
     return (
         <View style={{ backgroundColor: colors.background, flex: 1 }}>
-            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="LoginScreen" >
+            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={isAuth?"TopNavbar":"Login"}>
 
                 <Stack.Screen
                     name="Login"

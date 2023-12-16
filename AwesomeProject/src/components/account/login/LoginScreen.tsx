@@ -5,25 +5,24 @@ import {
     TextInput,
     Text,
     StyleSheet,
-    TouchableOpacity, Animated, Image, Button
+    TouchableOpacity, Animated, Image
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Controller, useForm} from "react-hook-form";
 import {useTheme} from "../../../contexts/ThemeContext";
-import DocumentPicker from 'react-native-document-picker';
 import ScrollView = Animated.ScrollView;
-import {IAuthResult, ILogin} from "../types";
-import {useDispatch} from "react-redux";
-import http_common from "../../../http_common";
+import {IAuthReducer, ILogin} from "../types";
+import {useDispatch, useSelector} from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {LoginUserAction} from "../AuthActions";
-// import {CreateCategoryAction} from "../CategoryActions";
 
 
 const LoginScreen = () => {
     const navigation = useNavigation();
+    const [loading, setLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState<string>("");
     const dispatch = useDispatch();
-
+    const {isAuth} = useSelector((store: any) => store.auth as IAuthReducer);
     const {colors} = useTheme();
 
     const form_styles = StyleSheet.create({
@@ -110,25 +109,18 @@ const LoginScreen = () => {
             fontSize: 14
         }
     });
-   
 
     useEffect(() => {
-        // Load the JWT token from AsyncStorage when the component mounts
-        //loadToken();
+        if (isAuth)
+            navigation.reset({
+                // @ts-ignore
+                routes: [{name: 'TopNavbar'}],
+            });
+        else {
+            setLoading(false);
+        }
     }, []);
 
-    const loadToken = async () => {
-        try {
-            // Load the JWT token from AsyncStorage
-            const storedToken = await AsyncStorage.getItem('jwtToken');
-            if (storedToken !== null) {
-                console.log('Token loaded successfully:', storedToken);
-                // You may want to set the token in your state or global state here
-            }
-        } catch (error) {
-            console.error('Error loading token:', error);
-        }
-    };
 
     const {
         control,
@@ -143,85 +135,97 @@ const LoginScreen = () => {
 
     const onSubmit = async (data: any) => {
         try {
-            const model: ILogin= {
+            const model: ILogin = {
                 email: data.email,
                 password: data.password
             }
-            console.log("login", model);
+            //console.log("login", model);
             await LoginUserAction(dispatch, model);
-            // @ts-ignore
-            //navigation.navigate('Home', { shouldUpdateDatabase: true });
-        }
-        catch(error) {
+            navigation.reset({
+                // @ts-ignore
+                routes: [{name: 'TopNavbar'}],
+            });
+        } catch (error) {
             console.log("Server error login", error);
+            setErrorMessage("Не вірно вказані дані");
         }
     }
 
     return (
-        <ScrollView style={form_styles.container}>
-            <View style={form_styles.logoContainer}>
-                <Image style={form_styles.tinyLogo} resizeMode={'contain'} source={require('../../../assets/logo.png')}/>
-            </View>
-            <View style={form_styles.contentContainer}>
-                <Text style={form_styles.loginText}>Вхід</Text>
-                <View style={{}}>
-                    <Text style={form_styles.label}>Email</Text>
-                    <Controller
-                        control={control}
-                        rules={{
-                            required: true,
-                        }}
-                        render={({field: {onChange, onBlur, value}}) => (
-                            <TextInput
-                                multiline={false}
-                                style={form_styles.input}
-                                onBlur={onBlur}
-                                onChangeText={onChange}
-                                value={value}
-                                placeholder="Вкажіть пошту"
+        <>
+            {loading == false &&
+                <ScrollView style={form_styles.container}>
+                    <View style={form_styles.logoContainer}>
+                        <Image style={form_styles.tinyLogo} resizeMode={'contain'}
+                               source={require('../../../assets/logo.png')}/>
+                    </View>
+                    <View style={form_styles.contentContainer}>
+                        <Text style={form_styles.loginText}>Вхід</Text>
+                        {errorMessage && <Text style={{
+                            color: 'red', fontSize: 20,
+                            fontFamily: 'Avenir'
+                        }}>{errorMessage}</Text>}
+                        <View style={{}}>
+                            <Text style={form_styles.label}>Email</Text>
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: true,
+                                }}
+                                render={({field: {onChange, onBlur, value}}) => (
+                                    <TextInput
+                                        multiline={false}
+                                        style={form_styles.input}
+                                        onBlur={onBlur}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        placeholder="Вкажіть пошту"
+                                    />
+                                )}
+                                name="email"
                             />
-                        )}
-                        name="email"
-                    />
-                    {errors.email && <Text style={{color: 'red'}}>Пошта є обов'язковою!</Text>}
-                </View>
+                            {errors.email && <Text style={{color: 'red'}}>Пошта є обов'язковою!</Text>}
+                        </View>
 
-                <View style={{}}>
-                    <Text style={form_styles.label}>Пароль</Text>
-                    <Controller
-                        control={control}
-                        rules={{
-                            maxLength: 100,
-                        }}
-                        render={({field: {onChange, onBlur, value}}) => (
-                            <TextInput
-                                multiline={false}
-                                onBlur={onBlur}
-                                style={form_styles.input}
-                                secureTextEntry={true}
-                                placeholder="Вкажіть пароль"
-                                onChangeText={onChange}
-                                value={value}
+                        <View style={{}}>
+                            <Text style={form_styles.label}>Пароль</Text>
+                            <Controller
+                                control={control}
+                                rules={{
+                                    maxLength: 100,
+                                }}
+                                render={({field: {onChange, onBlur, value}}) => (
+                                    <TextInput
+                                        multiline={false}
+                                        onBlur={onBlur}
+                                        style={form_styles.input}
+                                        secureTextEntry={true}
+                                        placeholder="Вкажіть пароль"
+                                        onChangeText={onChange}
+                                        value={value}
+                                    />
+                                )}
+                                name="password"
                             />
-                        )}
-                        name="password"
-                    />
-                </View>
+                        </View>
 
 
-                <View>
-                    <TouchableOpacity onPress={handleSubmit(onSubmit)} style={form_styles.loginBtn}>
-                        <Text style={form_styles.loginBtnText}>Вхід</Text>
-                    </TouchableOpacity>
-                    {/*@ts-ignore*/}
-                    <TouchableOpacity style={form_styles.rememberBlock} onPress={() => navigation.navigate('Register')}>
-                        <Text style={form_styles.forgotText}>Реєстрація</Text>
-                    </TouchableOpacity>
-                </View>
+                        <View>
+                            <TouchableOpacity onPress={handleSubmit(onSubmit)} style={form_styles.loginBtn}>
+                                <Text style={form_styles.loginBtnText}>Вхід</Text>
+                            </TouchableOpacity>
+                            {/*@ts-ignore*/}
+                            <TouchableOpacity style={form_styles.rememberBlock}
+                                              onPress={() => navigation.navigate('Register')}>
+                                <Text style={form_styles.forgotText}>Реєстрація</Text>
+                            </TouchableOpacity>
+                        </View>
 
-            </View>
+                    </View>
 
-        </ScrollView>
+                </ScrollView>
+            }
+        </>
     );
 };
 
