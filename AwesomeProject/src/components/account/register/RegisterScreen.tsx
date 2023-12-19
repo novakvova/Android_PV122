@@ -179,9 +179,7 @@ const RegisterScreen = () => {
 
     const onSubmit = async (data: any) => {
         try {
-            //console.log("Resp", data);
             const base64 = await RNFS.readFile( pickedImage ? pickedImage: "", 'base64');
-            //console.log("base64 = ", base64);
             const model: IRegister= {
                 firstName: data.firstName,
                 lastName: data.lastName,
@@ -199,7 +197,6 @@ const RegisterScreen = () => {
                 // @ts-ignore
                 routes: [{ name: 'TopNavbar' }],
             });
-            //navigation.navigate('CategoryListScreen', { shouldUpdateDatabase: true });
         }
         catch(error) {
             console.log("Server error login", error);

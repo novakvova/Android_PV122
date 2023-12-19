@@ -60,7 +60,7 @@ namespace WebSlon.Controllers
                     imageName = await ImageWorker.SaveImageAsync(bytes);
                 }
                 var user = _mapper.Map<UserEntity>(model);
-                var result = await _userManager.CreateAsync(user);
+                var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     result = await _userManager.AddToRoleAsync(user, Roles.User);
