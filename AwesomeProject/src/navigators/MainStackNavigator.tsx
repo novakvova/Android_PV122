@@ -6,8 +6,7 @@ import React from "react";
 import CategoryListScreen from "../components/category/list/CategoryListScreen";
 import Icon from "../components/icon/Icon";
 import CategoryCreateScreen from "../components/category/create/CategoryCreateScreen";
-import TestScreen from "../components/test/TestScreen";
-import CategoryEditScreen from "../components/category/edit/CategoryEditScreen";
+import ProfileScreen from "../components/profile/ProfileScreen";
 
 const MainTab = createBottomTabNavigator();
 
@@ -79,14 +78,14 @@ export const MainStackNavigator = () => {
 
                 <MainTab.Screen
                     name={"Test"}
-                    component={TestScreen}
+                    component={ProfileScreen}
                     options={{
                         title: "Test",
                         headerStyle: { backgroundColor: colors.containerBackground, borderBottomWidth: 0, borderWidth: 0 },
                         headerTitleStyle: { color: colors.mainText },
                         tabBarIcon: ({ focused }) => (
                             <Icon
-                                type={"house"}
+                                type={"profile"}
                                 size={20}
                                 focused={focused}
                                 isDark={isDark}

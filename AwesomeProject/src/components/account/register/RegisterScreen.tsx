@@ -18,6 +18,8 @@ import http_common from "../../../http_common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import {CreateCategoryAction} from "../CategoryActions";
 import RNFS from 'react-native-fs';
+import {LoginUserRedux} from "../AuthActions";
+import {store} from "../../../store";
 
 
 const RegisterScreen = () => {
@@ -187,11 +189,12 @@ const RegisterScreen = () => {
                 email: data.email,
                 password: data.password
             }
-            console.log("Register", model);
+            //console.log("Register", model);
             const result = await http_common.post<IAuthResult>("/api/account/register", model);
             const auth = result.data;
-            console.log("Login result", auth.token);
+            //console.log("Login result", auth.token);
             await AsyncStorage.setItem('jwtToken', auth.token);
+            LoginUserRedux(dispatch, auth.token);
             // @ts-ignore
             navigation.reset({
                 // @ts-ignore
