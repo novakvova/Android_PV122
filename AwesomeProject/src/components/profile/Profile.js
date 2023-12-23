@@ -1,21 +1,15 @@
 import React, { Component } from 'react'
 import { Card, Icon } from 'react-native-elements'
 import {
-    FlatList,
     Image,
     ImageBackground,
-    Linking,
     Platform,
     ScrollView,
     StyleSheet,
     Text,
     View,
 } from 'react-native'
-// import PropTypes from 'prop-types'
 
-import Email from './Email'
-import Separator from './Separator'
-import Tel from './Tel'
 
 const styles = StyleSheet.create({
     cardContainer: {
@@ -94,47 +88,6 @@ const styles = StyleSheet.create({
 })
 
 class Contact extends Component {
-    // static propTypes = {
-    //     avatar: PropTypes.string.isRequired,
-    //     avatarBackground: PropTypes.string.isRequired,
-    //     name: PropTypes.string.isRequired,
-    //     address: PropTypes.shape({
-    //         city: PropTypes.string.isRequired,
-    //         country: PropTypes.string.isRequired,
-    //     }).isRequired,
-    //     emails: PropTypes.arrayOf(
-    //         PropTypes.shape({
-    //             email: PropTypes.string.isRequired,
-    //             id: PropTypes.number.isRequired,
-    //             name: PropTypes.string.isRequired,
-    //         })
-    //     ).isRequired,
-    //     tels: PropTypes.arrayOf(
-    //         PropTypes.shape({
-    //             id: PropTypes.number.isRequired,
-    //             name: PropTypes.string.isRequired,
-    //             number: PropTypes.string.isRequired,
-    //         })
-    //     ).isRequired,
-    // }
-
-    onPressPlace = () => {
-        console.log('place')
-    }
-
-    onPressTel = number => {
-        Linking.openURL(`tel://${number}`).catch(err => console.log('Error:', err))
-    }
-
-    onPressSms = () => {
-        console.log('sms')
-    }
-
-    onPressEmail = email => {
-        Linking.openURL(`mailto://${email}?subject=subject&body=body`).catch(err =>
-            console.log('Error:', err)
-        )
-    }
 
     renderHeader = () => {
         const {
@@ -163,7 +116,6 @@ class Contact extends Component {
                                     name="place"
                                     underlayColor="transparent"
                                     iconStyle={styles.placeIcon}
-                                    onPress={this.onPressPlace}
                                 />
                             </View>
                             <View style={styles.userCityRow}>
@@ -178,56 +130,12 @@ class Contact extends Component {
         )
     }
 
-    renderTel = () => (
-        <FlatList
-            contentContainerStyle={styles.telContainer}
-            data={this.props.tels}
-            renderItem={(list) => {
-                const { id, name, number } = list.item
-
-                return (
-                    <Tel
-                        key={`tel-${id}`}
-                        index={list.index}
-                        name={name}
-                        number={number}
-                        onPressSms={this.onPressSms}
-                        onPressTel={this.onPressTel}
-                    />
-                )
-            }}
-        />
-    )
-
-    renderEmail = () => (
-        <FlatList
-            contentContainerStyle={styles.emailContainer}
-            data={this.props.emails}
-            renderItem={(list) => {
-                const { email, id, name } = list.item
-
-                return (
-                    <Email
-                        key={`email-${id}`}
-                        index={list.index}
-                        name={name}
-                        email={email}
-                        onPressEmail={this.onPressEmail}
-                    />
-                )
-            }}
-        />
-    )
-
     render() {
         return (
             <ScrollView style={styles.scroll}>
                 <View style={styles.container}>
                     <Card containerStyle={styles.cardContainer}>
                         {this.renderHeader()}
-                        {this.renderTel()}
-                        {Separator()}
-                        {this.renderEmail()}
                     </Card>
                 </View>
             </ScrollView>
